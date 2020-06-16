@@ -6,11 +6,15 @@ class FeedsController < ApplicationController
   # GET /feeds.json
   def index
     @feeds = Feed.all
+    # @entries = @feed.feed_entries.order("published desc").limit(10)
+    @entries = FeedEntry.all.order("published desc").limit(10)
   end
 
   # GET /feeds/1
   # GET /feeds/1.json
   def show
+    @feed = Feed.find params[:id]
+    @entries = @feed.feed_entries.order("published desc").limit(10)
   end
 
   # GET /feeds/new

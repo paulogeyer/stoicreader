@@ -1,12 +1,12 @@
 class Feed < ApplicationRecord
   before_create :get_feed_data
-  after_create 
+  after_create :get_feed_entries
   validates :url, presence: true
   validates :url, uniqueness: true
   has_many :feed_entries
 
   def get_feed_entries
-    data = Net::HTTP.get(URI(self.url))
+    data = Net::HTTP.get(URI(self.feed_url))
     feed = Feedjira.parse data
 
     feed.entries.each do |entry|
@@ -19,7 +19,7 @@ class Feed < ApplicationRecord
                            published: entry.published,
                            updated: entry.updated,
                            entry_id: entry.entry_id,
-                           feed: f)
+                           feed_id: self.id)
         nf.save
       end
     end
@@ -29,8 +29,8 @@ class Feed < ApplicationRecord
     data = Net::HTTP.get(URI(self.url))
     feed = Feedjira.parse data
     self.title = feed.title
+    self.feed_url = self.url
     self.url = feed.url
-    self.feed_url = feed.feed_url
     self.description = feed.description
   end
 end

@@ -1,0 +1,8 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <%= link_to 'Timeline', feeds_path %>
+  </li>
+  <% feeds.each do |feed| %>
+  <li class="list-group-item"><%= link_to feed.title, feed %></li>
+  <% end %>
+</ul>

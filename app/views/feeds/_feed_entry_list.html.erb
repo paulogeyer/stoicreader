@@ -1,0 +1,15 @@
+<h2>
+  <% if @feed && @feed.title.present? %>
+  <%= @feed.title %>
+  <% else %>
+  Timeline
+  <% end %>
+</h2>
+<% if entries.present? %>
+<% entries.each do |entry| %>
+<%= time_ago_in_words entry.published %> - 
+<%= link_to entry.title, [entry.feed, entry] %><br />
+<% end %>
+<% else %>
+<p>No entries</p>
+<% end %>

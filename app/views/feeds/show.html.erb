@@ -1,24 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @feed.title %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @feed.url %>
-</p>
-
-<p>
-  <strong>Feed url:</strong>
-  <%= @feed.feed_url %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @feed.description %>
-</p>
+<div class="row">
+  <div class="col-md-2">
+    <%= render partial: "feeds/feed_list",
+	locals: {feeds: Feed.all, cur_feed: @feed.id} %>
+  </div>
+  <div class="col-md-10">
+    <%= render partial: "feeds/feed_entry_list",
+	locals: {entries: @entries} %>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_feed_path(@feed) %> |
 <%= link_to 'Back', feeds_path %>
