@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-2">
+    <%= render partial: "feeds/feed_list",
+	locals: {feeds: Feed.all,
+	current_feed: @feed_entry.id } %>
+  </div>
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-12">
+	<ul class="list-group">
+	  <% @last_entries.each do |entry| %>
+	  <% if @feed_entry == entry %>
+	  <li class="list-group-item active">
+	    <%= time_ago_in_words entry.published %> - <%= entry.title %>
+	  </li>
+	  <% else %>
+	  <li class="list-group-item">
+	    <%= time_ago_in_words entry.published %> - <%= link_to entry.title, [entry.feed, entry] %>
+	  </li>
+	  <% end %>
+	  <% end %>
+	</ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+	<h1><%= @feed_entry.title %></h1>
+	<%= raw @feed_entry.content %>
+      </div>
+    </div>
+  </div>
+</div>

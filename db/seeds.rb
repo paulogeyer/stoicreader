@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+feed_list = File.open("#{Rails.root}/db/feed_list.txt", 'r').read
+feed_list.each_line do |line|
+  feed = Feed.new(url: line.strip)
+  feed.save
+end

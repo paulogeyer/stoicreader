@@ -4,6 +4,7 @@ class Feed < ApplicationRecord
   validates :url, presence: true
   validates :url, uniqueness: true
   has_many :feed_entries
+  has_and_belongs_to_many :users
 
   def get_feed_entries
     data = Net::HTTP.get(URI(self.feed_url))
