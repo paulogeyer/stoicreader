@@ -1,10 +1,20 @@
+<% if @feed && @feed.title.present? %>
 <h2>
-  <% if @feed && @feed.title.present? %>
   <%= @feed.title %>
-  <% else %>
-  Timeline
-  <% end %>
 </h2>
+<p>
+  <% if current_user.feeds.include? @feed %>
+  <%= link_to 'Unsubscribe', unsubscribe_feed_path(@feed), class: 'btn btn-danger', method: :delete %>
+  <% else %>
+  <%= link_to 'Subscribe', subscribe_feed_path(@feed), class: 'btn btn-info', method: :post %>
+  <% end %>
+</p>
+<% else %>
+<h2>
+  Timeline
+</h2>
+<% end %>
+
 <% if entries.present? %>
 <% entries.each do |entry| %>
 <%= time_ago_in_words entry.published %> - 

@@ -1,19 +1,20 @@
 class FeedsController < ApplicationController
-  before_action :set_feed, only: [:show, :edit, :update, :destroy]
+  before_action :set_feed, only: [:show, :edit, :update, :destroy,
+                                  :subscribe, :unsubscribe]
   before_action :authenticate_user!
 
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = Feed.all
+    @feeds = current_user.feeds
     # @entries = @feed.feed_entries.order("published desc").limit(10)
     @entries = FeedEntry.all.order("published desc").limit(10)
+                 .where(feed_id: @feeds.ids)
   end
 
   # GET /feeds/1
   # GET /feeds/1.json
   def show
-    @feed = Feed.find params[:id]
     @entries = @feed.feed_entries.order("published desc").limit(10)
   end
 
@@ -64,6 +65,27 @@ class FeedsController < ApplicationController
       format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def subscribe
+    if current_user.feeds << @feed
+      flash[:notice] = "Subscribed to #{@feed.title}!"
+    else
+      flash[:error] = "Couldn't susbcribe to feed"
+      render 'show'
+    end
+
+    redirect_to @feed
+  end
+
+  def unsubscribe
+    if current_user.feeds.delete @feed
+      flash[:notice] = "Unsubscribed #{@feed.title}!"
+    else
+      flash[:error] = "Couldn't unsusbcribe to feed"
+    end
+
+    redirect_to @feed
   end
 
   private

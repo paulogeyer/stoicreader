@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_171805) do
+ActiveRecord::Schema.define(version: 2020_06_25_182324) do
+
+  create_table "disliked_entries", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "feed_entry_id"
+  end
 
   create_table "feed_entries", force: :cascade do |t|
     t.string "title"
@@ -35,6 +40,16 @@ ActiveRecord::Schema.define(version: 2020_06_25_171805) do
   create_table "feeds_users", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "feed_id"
+  end
+
+  create_table "liked_entries", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "feed_entry_id"
+  end
+
+  create_table "read_entries", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "feed_entry_id"
   end
 
   create_table "users", force: :cascade do |t|

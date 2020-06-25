@@ -1,5 +1,19 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Subscriptions</h1>
+
+<ul class="list-group">
+  <% @feeds.each do |feed| %>
+  <li class="list-group-item">
+    <%= link_to 'Unsubscribe', unsubscribe_feed_path(feed), class: 'btn btn-danger', method: :delete, data: {confirm: "Are you sure?"} %>
+    <%= link_to feed.title, feed %>
+  </li>
+  <% end %>
+</ul>
+
+<ul>
+</ul>
+
 <div class="row">
   <div class="col-md-2">
     <%= render partial: "feeds/feed_list",
@@ -10,7 +24,3 @@
 	locals: {entries: @entries} %>
   </div>
 </div>
-
-<br>
-
-<%= link_to 'New Feed', new_feed_path %>

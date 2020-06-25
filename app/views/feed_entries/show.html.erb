@@ -7,6 +7,8 @@
   <div class="col-md-10">
     <div class="row">
       <div class="col-md-12">
+	<h1><%= @feed.title %></h1>
+	<hr />
 	<ul class="list-group">
 	  <% @last_entries.each do |entry| %>
 	  <% if @feed_entry == entry %>
@@ -24,7 +26,8 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-	<h1><%= @feed_entry.title %></h1>
+	<hr />
+	<h2><%= @feed_entry.title %></h2>
 	<%= raw @feed_entry.content %>
       </div>
     </div>

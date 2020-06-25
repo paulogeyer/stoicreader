@@ -6,9 +6,32 @@ class Feed < ApplicationRecord
   has_many :feed_entries
   has_and_belongs_to_many :users
 
+  def self.fetch_new_feed_entries
+    Feed.all.each do |feed|
+      begin
+        feed.get_feed_entries
+      rescue SocketError
+        next
+      end
+    end
+  end
+
   def get_feed_entries
-    data = Net::HTTP.get(URI(self.feed_url))
-    feed = Feedjira.parse data
+    puts "feed_id: #{self.id}"
+    puts "url: #{self.url}"
+
+    begin
+      data = Net::HTTP.get(URI(self.url))
+      feed = Feedjira.parse data
+    rescue Feedjira::NoParserAvailable
+      data = Net::HTTP.get(URI(self.feed_url))
+      feed = Feedjira.parse data
+    rescue Errno::ECONNREFUSED
+      data = Net::HTTP.get(URI(self.feed_url))
+      feed = Feedjira.parse data
+    end
+
+    return nil if feed.entries.empty?
 
     feed.entries.each do |entry|
       f = FeedEntry.find_by_entry_id entry.entry_id
