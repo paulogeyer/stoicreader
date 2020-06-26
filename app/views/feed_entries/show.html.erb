@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-3">
     <%= render partial: "feeds/feed_list",
 	locals: {feeds: Feed.all,
 	current_feed: @feed_entry.id } %>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-9">
     <div class="row">
       <div class="col-md-12">
-	<h1><%= @feed.title %></h1>
+	<h1><%= link_to @feed.title, @feed %></h1>
 	<hr />
 	<ul class="list-group">
 	  <% @last_entries.each do |entry| %>

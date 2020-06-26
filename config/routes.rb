@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :subscriptions do
+  end
+
   resources :feeds do
     resources :feed_entries
 

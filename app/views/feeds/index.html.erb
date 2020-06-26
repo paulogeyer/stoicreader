@@ -15,11 +15,11 @@
 </ul>
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-3">
     <%= render partial: "feeds/feed_list",
-	locals: {feeds: Feed.all} %>
+	locals: {feeds: Feed.all.limit(5)} %>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-9">
     <%= render partial: "feeds/feed_entry_list",
 	locals: {entries: @entries} %>
   </div>

@@ -6,7 +6,7 @@ class FeedsController < ApplicationController
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = current_user.feeds
+    @feeds = current_user.feeds.all
     # @entries = @feed.feed_entries.order("published desc").limit(10)
     @entries = FeedEntry.all.order("published desc").limit(10)
                  .where(feed_id: @feeds.ids)

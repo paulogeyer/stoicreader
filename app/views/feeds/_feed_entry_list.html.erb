@@ -4,7 +4,7 @@
 </h2>
 <p>
   <% if current_user.feeds.include? @feed %>
-  <%= link_to 'Unsubscribe', unsubscribe_feed_path(@feed), class: 'btn btn-danger', method: :delete %>
+  <%= link_to 'Unsubscribe', unsubscribe_feed_path(@feed), class: 'btn btn-danger', method: :delete, data: {confirm: "Are you sure?"} %>
   <% else %>
   <%= link_to 'Subscribe', subscribe_feed_path(@feed), class: 'btn btn-info', method: :post %>
   <% end %>
@@ -16,10 +16,14 @@
 <% end %>
 
 <% if entries.present? %>
-<% entries.each do |entry| %>
-<%= time_ago_in_words entry.published %> - 
-<%= link_to entry.title, [entry.feed, entry] %><br />
-<% end %>
+<ul class="list-group">
+  <% entries.each do |entry| %>
+  <li class="list-group-item">
+    <%= time_ago_in_words entry.published %> - 
+    <%= link_to entry.title, [entry.feed, entry] %><br />
+  </li>
+  <% end %>
+</ul>
 <% else %>
 <p>No entries</p>
 <% end %>

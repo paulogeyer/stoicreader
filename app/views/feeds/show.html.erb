@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-3">
     <%= render partial: "feeds/feed_list",
 	locals: {feeds: Feed.all, cur_feed: @feed.id} %>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-9">
     <%= render partial: "feeds/feed_entry_list",
 	locals: {entries: @entries} %>
   </div>
